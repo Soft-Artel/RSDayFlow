@@ -2,7 +2,7 @@
 // RSDFDatePickerDayCell.h
 //
 // Copyright (c) 2013 Evadne Wu, http://radi.ws/
-// Copyright (c) 2013-2016 Ruslan Skorb, http://ruslanskorb.com
+// Copyright (c) 2013-2015 Ruslan Skorb, http://ruslanskorb.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <RSDayFlow/RSDFDatePickerDate.h>
+#import "RSDFDatePickerDate.h"
+#import "SPBuzzyView.h"
 
 /**
  The `RSDFDatePickerDayCell` is a cell which used to display a day in the date picker view.
  */
-@interface RSDFDatePickerDayCell : UICollectionViewCell
+@interface RSDFDatePickerDayCell : UICollectionViewCell{
+    RSDFDatePickerDate date;
+}
 
 ///-------------------------
 /// @name Accessing Subviews
@@ -92,6 +95,13 @@
  The mark image for the cell of the day. The default mark image is a small round mark.
  */
 @property (nonatomic, strong) UIImage *markImage;
+
+
+/**
+ BuzzyBar for day
+ */
+@property (nonatomic, strong) SPBuzzyView *bussyBar;
+
 
 ///---------------------------------------
 /// @name Accessing Attributes of the View

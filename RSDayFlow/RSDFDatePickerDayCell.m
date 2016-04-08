@@ -2,7 +2,7 @@
 // RSDFDatePickerDayCell.m
 //
 // Copyright (c) 2013 Evadne Wu, http://radi.ws/
-// Copyright (c) 2013-2016 Ruslan Skorb, http://ruslanskorb.com
+// Copyright (c) 2013-2015 Ruslan Skorb, http://ruslanskorb.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -205,6 +205,53 @@
     }
 }
 
+
+
+-(RSDFDatePickerDate) date{
+    return date;
+}
+
+-(void) setDate:(RSDFDatePickerDate)d{
+
+     CGSize bbSize = self.bounds.size;
+    
+    if( !self.bussyBar ){
+        
+
+        
+        bbSize.height = 8;
+        bbSize.width  -= 8;
+        
+        
+        self.bussyBar = [[SPBuzzyView alloc] initBySize: bbSize
+                                                  inDay: nil
+                                                andData: nil
+                                                andType: SPBuzzyViewTypeCalendarTop ];
+        
+        [self addSubview: self.bussyBar ];
+        
+    }
+
+        date = d;
+        
+        NSString * dF = (d.day<10)?@"0%d":@"%d"; dF = [NSString stringWithFormat: dF, d.day ];
+        NSString * mF = (d.month<10)?@"0%d":@"%d"; mF = [NSString stringWithFormat: mF, d.month ];
+        
+        NSNumber * dk = @([[NSString stringWithFormat:@"%lu%@%@", (unsigned long)d.year, mF, dF] integerValue]);
+        
+        NSArray * bb = [[SPCalendarDS shared] getDiaryItemsByDayKey:dk];
+        
+        self.bussyBar.buzzyBarData = bb;
+    
+ 
+
+    CGRect frm =  CGRectMake(4, 0 , bbSize.width, bbSize.height);
+    self.bussyBar.frame = frm;
+
+    
+}
+
+
 #pragma mark - Private
 
 - (void)updateSubviews
@@ -212,8 +259,10 @@
     self.selectedDayImageView.hidden = !self.isSelected || self.isNotThisMonth || self.isOutOfRange;
     self.overlayImageView.hidden = !self.isHighlighted || self.isNotThisMonth || self.isOutOfRange;
     self.markImageView.hidden = !self.isMarked || self.isNotThisMonth || self.isOutOfRange;
-    self.dividerImageView.hidden = self.isNotThisMonth;
+    self.dividerImageView.hidden = YES;
 
+    self.bussyBar.alpha = ( self.dayOff )?0.5:1;
+    
     if (self.isNotThisMonth) {
         self.dateLabel.textColor = [self notThisMonthLabelTextColor];
         self.dateLabel.font = [self dayLabelFont];
@@ -338,12 +387,12 @@
 
 - (UIColor *)dayLabelTextColor
 {
-    return [UIColor blackColor];
+    return [UIColor colorWithRed:0.23 green:0.46 blue:0.67 alpha:1.0];
 }
 
 - (UIColor *)dayOffLabelTextColor
 {
-    return [UIColor colorWithRed:184/255.0f green:184/255.0f blue:184/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:0.55 green:0.7 blue:0.90 alpha:0.5];
 }
 
 - (UIColor *)outOfRangeDayLabelTextColor
@@ -363,12 +412,12 @@
 
 - (UIColor *)pastDayLabelTextColor
 {
-    return [self dayLabelTextColor];
+    return [UIColor colorWithRed:0.40 green:0.40 blue:0.40 alpha:1.0];
 }
 
 - (UIColor *)pastDayOffLabelTextColor
 {
-    return [self dayOffLabelTextColor];
+    return [UIColor colorWithRed:0.40 green:0.40 blue:0.40 alpha:0.5];
 }
 
 - (UIFont *)todayLabelFont
@@ -378,22 +427,22 @@
 
 - (UIColor *)todayLabelTextColor
 {
-    return [UIColor colorWithRed:0/255.0f green:121/255.0f blue:255/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:0.62 green:0.11 blue:0.76 alpha:1.0];
 }
 
 - (UIFont *)selectedTodayLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:19.0f];
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:22.0f];
 }
 
 - (UIColor *)selectedTodayLabelTextColor
 {
-    return [UIColor whiteColor];
+    return [UIColor colorWithRed:0.62 green:0.11 blue:0.76 alpha:1.0];
 }
 
 - (UIColor *)selectedTodayImageColor
 {
-    return [UIColor colorWithRed:0/255.0f green:121/255.0f blue:255/255.0f alpha:1.0f];
+    return [UIColor clearColor];
 }
 
 - (UIImage *)customSelectedTodayImage
@@ -414,17 +463,17 @@
 
 - (UIFont *)selectedDayLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:19.0f];
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:22.0f];
 }
 
 - (UIColor *)selectedDayLabelTextColor
 {
-    return [UIColor whiteColor];
+    return [UIColor colorWithRed:0.80 green:0.10 blue:0.17 alpha:1.0];
 }
 
 - (UIColor *)selectedDayImageColor
 {
-    return [UIColor colorWithRed:255/255.0f green:59/255.0f blue:48/255.0f alpha:1.0f];
+    return [UIColor clearColor];
 }
 
 - (UIImage *)customSelectedDayImage

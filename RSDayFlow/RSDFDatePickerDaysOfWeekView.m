@@ -2,7 +2,7 @@
 // RSDFDatePickerDaysOfWeekView.m
 //
 // Copyright (c) 2013 Evadne Wu, http://radi.ws/
-// Copyright (c) 2013-2016 Ruslan Skorb, http://ruslanskorb.com
+// Copyright (c) 2013-2015 Ruslan Skorb, http://ruslanskorb.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -279,7 +279,7 @@
 
 - (UIColor *)selfBackgroundColor
 {
-    return [UIColor colorWithRed:248.0/255 green:248.0/255 blue:248.0/255 alpha:1.0];
+    return [UIColor clearColor];//[UIColor colorWithRed:248.0/255 green:248.0/255 blue:248.0/255 alpha:1.0];
 }
 
 #pragma mark - Attributes of the Layout
